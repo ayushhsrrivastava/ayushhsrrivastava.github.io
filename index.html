@@ -965,7 +965,7 @@
                     <input type="tel" id="cvContact" name="contact" placeholder="E.g., 9876543210" required maxlength="10" pattern="\d{10}" oninput="this.value = this.value.replace(/[^0-9]/g, '')" class="shadow appearance-none border rounded-lg w-full py-3 px-4 text-slate-900 leading-tight focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-slate-200">
                 </div>
                 <div class="flex items-center space-x-2">
-                    <input type="checkbox" id="termsCheckbox" checked class="form-checkbox h-4 w-4 text-indigo-600 rounded">
+                    <input type="checkbox" name="termsCheckbox" id="termsCheckbox" checked class="form-checkbox h-4 w-4 text-indigo-600 rounded">
                     <label for="termsCheckbox" class="text-sm">I agree to the terms and conditions</label>
                 </div>
                 <div class="flex justify-center pt-4">
@@ -1310,7 +1310,7 @@
     var encodedData = new URLSearchParams(formData).toString();
 
     // Replace 'YOUR_WEB_APP_URL' with the URL you copied from your Apps Script deployment
-    var webAppUrl = 'https://script.google.com/macros/s/AKfycby2IOieLH-UaqkLLNUL6zt0su4Y4fbGtHv6k3OpmF5hwAdKIngNAsoLyDkbXQAlELXZnA/exec';
+    var webAppUrl = 'https://script.google.com/macros/s/AKfycbxf1ShRZMV5b4vqO0lY4wM0frQ3ny58BjG7S0Y3uzycgqe1BwowbxYYoPJ6fPrP8m8ckQ/exec';
 
     fetch(webAppUrl, {
         method: 'POST',
