@@ -948,6 +948,9 @@
         <div class="modal-content">
             <button class="modal-close-button" id="closeCvFormModal">×</button>
             <h2 class="text-2xl font-bold mb-6 text-center">Enter details to download CV</h2>
+            <div id="messageBox" class="message-box">
+                Please agree to the terms and conditions.
+            </div>
             <form id="cvForm" class="space-y-4" action="#">
                 <div>
                     <label for="cvName" class="block text-sm font-bold mb-2">Your Name</label>
@@ -961,8 +964,12 @@
                     <label for="cvContact" class="block text-sm font-bold mb-2">Contact Number</label>
                     <input type="tel" id="cvContact" name="contact" placeholder="E.g., 9876543210" required maxlength="10" pattern="\d{10}" oninput="this.value = this.value.replace(/[^0-9]/g, '')" class="shadow appearance-none border rounded-lg w-full py-3 px-4 text-slate-900 leading-tight focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-slate-200">
                 </div>
+                <div class="flex items-center space-x-2">
+                    <input type="checkbox" id="termsCheckbox" checked class="form-checkbox h-4 w-4 text-indigo-600 rounded">
+                    <label for="termsCheckbox" class="text-sm">I agree to the terms and conditions</label>
+                </div>
                 <div class="flex justify-center pt-4">
-                    <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-8 rounded-full text-lg shadow-lg transition-transform hover:scale-105">
+                    <button type="submit" id="submitButton" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-8 rounded-full text-lg shadow-lg transition-transform hover:scale-105">
                         Submit & Download
                     </button>
                 </div>
@@ -1186,8 +1193,40 @@
             };
 
             // --- CV Form Submission ---
+            /*const cvForm = document.getElementById('cvForm');
+            cvForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                showMessage('Thank you! Your download will begin shortly.');
+                
+                // Create a link and trigger the download
+                const cvUrl = "https://drive.google.com/file/d/1HdyF9PMyuxg9supBZgbOhPZ9skIS7S1W/view?usp=sharing"; // CV DOwnload
+                const link = document.createElement('a');
+                link.href = cvUrl;
+                link.download = 'Ayushh_Srrivastava_CV.pdf'; // Desired file name
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                
+                // Close the modal
+                document.getElementById('cvFormModal').classList.remove('active');
+                body.style.overflow = '';
+                cvForm.reset();
+            });*/
+
+                        // --- CV Form Submission ---
             const cvForm = document.getElementById('cvForm');
             cvForm.addEventListener('submit', (e) => {
+                // Select the checkbox element
+                const termsCheckbox = document.getElementById('termsCheckbox');
+            
+                // Prevent form from submitting if the checkbox is not checked
+                if (!termsCheckbox.checked) {
+                    // You can add a message here to inform the user
+                    // e.g., showMessage('Please agree to the terms and conditions.');
+                    e.preventDefault(); // Stop the form submission
+                    return; // Exit the function
+                }
+            
                 e.preventDefault();
                 showMessage('Thank you! Your download will begin shortly.');
                 
