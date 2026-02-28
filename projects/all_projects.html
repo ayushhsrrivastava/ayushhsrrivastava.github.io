@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO METADATA -->
+    <title>Projects | Ayush Srivastava Portfolio</title>
+    <meta name="description" content="Explore the portfolio of Ayush Srivastava, featuring large-scale project management case studies in FinTech, Healthcare, and beyond.">
+    <meta name="author" content="Ayush Srivastava">
+
+    <!-- FONTS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    
+    <!-- TAILWIND CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- ICONS -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'brand-dark': '#0a0a0a',
+                        'brand-gray': '#1c1c1c',
+                        'brand-accent': '#d4af37',
+                        'brand-text': '#f3f4f6',
+                        'brand-muted': '#9ca3af',
+                    },
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #0a0a0a;
+            color: #f3f4f6;
+            cursor: none;
+            overflow-x: hidden;
+        }
+
+        /* Reading Progress Bar */
+        #progress-bar {
+            position: fixed; top: 0; left: 0;
+            height: 3px; background: #d4af37;
+            width: 0%; z-index: 100;
+            box-shadow: 0 0 10px #d4af37;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #0a0a0a; }
+        ::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
+
+        /* Custom Cursor */
+        .cursor-dot, .cursor-outline {
+            position: fixed; top: 0; left: 0;
+            transform: translate(-50%, -50%);
+            border-radius: 50%; z-index: 9999;
+            pointer-events: none;
+        }
+        .cursor-dot { width: 8px; height: 8px; background-color: white; }
+        .cursor-outline {
+            width: 40px; height: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            transition: width 0.2s, height 0.2s, background-color 0.2s;
+        }
+        body.hovering .cursor-outline {
+            width: 60px; height: 60px;
+            background-color: rgba(212, 175, 55, 0.1);
+            border-color: #d4af37;
+        }
+
+        /* Noise Overlay */
+        .noise-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 9000; opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        .reveal {
+            opacity: 0; transform: translateY(20px);
+            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+        }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        .project-card:hover .project-image {
+            transform: scale(1.05);
+            filter: grayscale(0);
+        }
+        
+        .project-image {
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            filter: grayscale(1);
+        }
+
+        /* Filter Transitions */
+        .project-card {
+            transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+        .project-card.hidden {
+            display: none;
+            opacity: 0;
+            transform: scale(0.95);
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <div id="progress-bar"></div>
+    <div class="noise-overlay"></div>
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 top-0 transition-all duration-300 border-b border-white/5 bg-brand-dark/80 backdrop-blur-md" id="navbar">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center relative">
+            <a href="index.html" class="text-2xl font-serif font-bold tracking-tight interactable">AS<span class="text-brand-accent">.</span></a>
+            <div class="hidden md:flex items-center gap-8 text-sm uppercase tracking-widest font-light">
+                <a href="index.html" class="hover:text-brand-accent transition-colors interactable">Home</a>
+                <a href="#" class="text-brand-accent interactable">Projects</a>
+                <a href="insights.html" class="hover:text-brand-accent transition-colors interactable">Insights</a>
+                <a href="contact.html" class="hover:text-brand-accent transition-colors interactable border border-white/20 px-4 py-2 rounded-full">Hire Me</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="pt-32 pb-24">
+        <!-- Header Section -->
+        <section class="max-w-7xl mx-auto px-6 mb-16">
+            <div class="max-w-3xl">
+                <h1 class="text-5xl md:text-7xl font-serif mb-6 reveal">
+                    Proven <span class="text-brand-accent italic">Impact</span> Across Industries.
+                </h1>
+                <p class="text-brand-muted text-lg font-light leading-relaxed reveal" style="transition-delay: 100ms;">
+                    A selection of high-stakes project migrations, product launches, and digital transformations delivered for global enterprises.
+                </p>
+            </div>
+        </section>
+
+        <!-- Filters -->
+        <section class="max-w-7xl mx-auto px-6 mb-12 reveal" style="transition-delay: 150ms;">
+            <div id="filter-container" class="flex flex-wrap gap-4 border-b border-white/10 pb-6">
+                <button data-filter="all" class="filter-btn text-xs uppercase tracking-widest px-6 py-2 rounded-full bg-brand-accent text-brand-dark font-bold interactable transition-all">All Projects</button>
+                <button data-filter="ai" class="filter-btn text-xs uppercase tracking-widest px-6 py-2 rounded-full border border-white/10 hover:border-brand-accent text-brand-muted hover:text-brand-accent transition-all interactable">AI</button>
+                <!-- <button data-filter="healthcare" class="filter-btn text-xs uppercase tracking-widest px-6 py-2 rounded-full border border-white/10 hover:border-brand-accent text-brand-muted hover:text-brand-accent transition-all interactable">Healthcare</button>
+                <button data-filter="saas" class="filter-btn text-xs uppercase tracking-widest px-6 py-2 rounded-full border border-white/10 hover:border-brand-accent text-brand-muted hover:text-brand-accent transition-all interactable">SaaS</button> -->
+                <button data-filter="ecommerce" class="filter-btn text-xs uppercase tracking-widest px-6 py-2 rounded-full border border-white/10 hover:border-brand-accent text-brand-muted hover:text-brand-accent transition-all interactable">E-commerce</button>
+            </div>
+        </section>
+
+        <!-- Project Grid -->
+        <section id="project-grid" class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            
+            <!-- Project 1 -->
+
+            <a href="/projects/project4.html" data-category="ai" class="project-card group reveal block interactable" style="transition-delay: 300ms;">
+                <div class="relative aspect-[4/3] rounded-2xl overflow-hidden border border-white/5 mb-6">
+                    <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80" alt="SaaS Dashboard" class="project-image w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-brand-dark/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                        <span class="text-xs uppercase tracking-[0.3em] font-bold text-white border-b border-brand-accent pb-1">View Case Study</span>
+                    </div>
+                </div>
+                <div class="space-y-2">
+                    <div class="flex justify-between items-center">
+                        <span class="text-[10px] text-brand-accent uppercase tracking-[0.2em] font-bold">AI</span>
+                        <span class="text-[10px] text-brand-muted uppercase tracking-widest">2025-26</span>
+                    </div>
+                    <h3 class="text-2xl font-serif group-hover:text-brand-accent transition-colors">Empowering Global Teams with Sales Enablement AI</h3>
+                    <p class="text-sm text-brand-muted font-light line-clamp-2">pearheaded three critical integration tracks to embed the platform into the daily workflow.</p>
+                </div>
+            </a>
+
+            <!-- <a href="/projects/project1.html" data-category="ai" class="project-card group reveal block interactable" style="transition-delay: 200ms;">
+                <div class="relative aspect-[4/3] rounded-2xl overflow-hidden border border-white/5 mb-6">
+                    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80" alt="FinTech Migration" class="project-image w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-brand-dark/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                        <span class="text-xs uppercase tracking-[0.3em] font-bold text-white border-b border-brand-accent pb-1">View Case Study</span>
+                    </div>
+                </div>
+                <div class="space-y-2">
+                    <div class="flex justify-between items-center">
+                        <span class="text-[10px] text-brand-accent uppercase tracking-[0.2em] font-bold">AI</span>
+                        <span class="text-[10px] text-brand-muted uppercase tracking-widest">2025</span>
+                    </div>
+                    <h3 class="text-2xl font-serif group-hover:text-brand-accent transition-colors">Scaling Revenue Growth with Intelligent Enablement</h3>
+                    <p class="text-sm text-brand-muted font-light line-clamp-2">Lead the end-to-end implementation—from initial setup and MVP through to General Availability (GA) for our Sales and Customer Success teams.</p>
+                </div>
+            </a> -->
+
+            <!-- Project 2 -->
+            
+
+            <!-- Project 3 -->
+            <a href="/projects/project5.html" data-category="ecommerce" class="project-card group reveal block interactable" style="transition-delay: 350ms;">
+                <div class="relative aspect-[4/3] rounded-2xl overflow-hidden border border-white/5 mb-6">
+                    <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&q=80" alt="E-commerce" class="project-image w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-brand-dark/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                        <span class="text-xs uppercase tracking-[0.3em] font-bold text-white border-b border-brand-accent pb-1">View Case Study</span>
+                    </div>
+                </div>
+                <div class="space-y-2">
+                    <div class="flex justify-between items-center">
+                        <span class="text-[10px] text-brand-accent uppercase tracking-[0.2em] font-bold">E-commerce</span>
+                        <span class="text-[10px] text-brand-muted uppercase tracking-widest">2025</span>
+                    </div>
+                    <h3 class="text-2xl font-serif group-hover:text-brand-accent transition-colors">Scaling Hyperlocal Darkstore Operations.</h3>
+                    <p class="text-sm text-brand-muted font-light line-clamp-2"> transition these identified zones from empty shells to fully functional Darkstores.</p>
+                </div>
+            </a>
+
+            <!-- Project 5 -->
+            
+
+            <a href="/projects/project3.html" data-category="ecommerce" class="project-card group reveal block interactable" style="transition-delay: 250ms;">
+                <div class="relative aspect-[4/3] rounded-2xl overflow-hidden border border-white/5 mb-6">
+                    <img src="https://plus.unsplash.com/premium_photo-1740363268539-cd9093c3b5d1?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="SAP" class="project-image w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-brand-dark/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                        <span class="text-xs uppercase tracking-[0.3em] font-bold text-white border-b border-brand-accent pb-1">View Case Study</span>
+                    </div>
+                </div>
+                <div class="space-y-2">
+                    <div class="flex justify-between items-center">
+                        <span class="text-[10px] text-brand-accent uppercase tracking-[0.2em] font-bold">Ecommerce</span>
+                        <span class="text-[10px] text-brand-muted uppercase tracking-widest">2024</span>
+                    </div>
+                    <h3 class="text-2xl font-serif group-hover:text-brand-accent transition-colors">Data Interchange Synchronization</h3>
+                    <p class="text-sm text-brand-muted font-light line-clamp-2"> I inherited a stalled "Site Tunneling" initiative between a major fashion house's SAP system and a leading e-commerce marketplace.</p>
+                </div>
+            </a>
+
+           
+
+            <a href="/projects/project8.html" data-category="ecommerce" class="project-card group reveal block interactable" style="transition-delay: 350ms;">
+                <div class="relative aspect-[4/3] rounded-2xl overflow-hidden border border-white/5 mb-6">
+                    <img src="https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?auto=format&fit=crop&q=80" alt="E-commerce" class="project-image w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-brand-dark/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                        <span class="text-xs uppercase tracking-[0.3em] font-bold text-white border-b border-brand-accent pb-1">View Case Study</span>
+                    </div>
+                </div>
+                <div class="space-y-2">
+                    <div class="flex justify-between items-center">
+                        <span class="text-[10px] text-brand-accent uppercase tracking-[0.2em] font-bold">E-commerce</span>
+                        <span class="text-[10px] text-brand-muted uppercase tracking-widest">2024</span>
+                    </div>
+                    <h3 class="text-2xl font-serif group-hover:text-brand-accent transition-colors">Elevating Luxury Goods through AI Innovation</h3>
+                    <p class="text-sm text-brand-muted font-light line-clamp-2">Built a comprehensive e-commerce platform that married high-end aesthetics with complex functional requirements.</p>
+                </div>
+            </a>
+
+
+            <!-- Project 6 -->
+            <a href="/projects/project6.html" data-category="ecommerce" class="project-card group reveal block interactable" style="transition-delay: 350ms;">
+                <div class="relative aspect-[4/3] rounded-2xl overflow-hidden border border-white/5 mb-6">
+                    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80" alt="E-commerce" class="project-image w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-brand-dark/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                        <span class="text-xs uppercase tracking-[0.3em] font-bold text-white border-b border-brand-accent pb-1">View Case Study</span>
+                    </div>
+                </div>
+                <div class="space-y-2">
+                    <div class="flex justify-between items-center">
+                        <span class="text-[10px] text-brand-accent uppercase tracking-[0.2em] font-bold">E-commerce</span>
+                        <span class="text-[10px] text-brand-muted uppercase tracking-widest">2023-24</span>
+                    </div>
+                    <h3 class="text-2xl font-serif group-hover:text-brand-accent transition-colors">Architecting a Dual-Channel Hub for Electronics.</h3>
+                    <p class="text-sm text-brand-muted font-light line-clamp-2">Established two distinct digital ecosystems—B2B and B2C—within a single, unified management infrastructure.</p>
+                </div>
+            </a>
+
+            <!-- Project 8 -->
+            
+
+            <!-- Project 9 -->
+            <!-- <a href="/projects/project5.html" data-category="ecommerce" class="project-card group reveal block interactable" style="transition-delay: 350ms;">
+                <div class="relative aspect-[4/3] rounded-2xl overflow-hidden border border-white/5 mb-6">
+                    <img src="https://images.unsplash.com/photo-1557821552-17105176677c?auto=format&fit=crop&q=80" alt="E-commerce" class="project-image w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-brand-dark/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                        <span class="text-xs uppercase tracking-[0.3em] font-bold text-white border-b border-brand-accent pb-1">View Case Study</span>
+                    </div>
+                </div>
+                <div class="space-y-2">
+                    <div class="flex justify-between items-center">
+                        <span class="text-[10px] text-brand-accent uppercase tracking-[0.2em] font-bold">E-commerce</span>
+                        <span class="text-[10px] text-brand-muted uppercase tracking-widest">2022</span>
+                    </div>
+                    <h3 class="text-2xl font-serif group-hover:text-brand-accent transition-colors">Omnichannel Logistics Engine</h3>
+                    <p class="text-sm text-brand-muted font-light line-clamp-2">Optimizing supply chain logic to improve last-mile delivery times by 22%.</p>
+                </div>
+            </a> -->
+
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-white/10 py-12 bg-black relative z-10">
+        <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="flex flex-col items-center md:items-start gap-4">
+                <div class="text-2xl font-serif font-bold tracking-tight">AS<span class="text-brand-accent">.</span></div>
+                <div class="flex gap-5">
+                    <a href="https://www.linkedin.com/in/ayushh-srrivastava" target="_blank" class="text-brand-muted hover:text-brand-accent transition-colors interactable text-xl"><i class="ph ph-linkedin-logo"></i></a>
+                    <a href="https://instagram.com/ayushh.info" target="_blank" class="text-brand-muted hover:text-brand-accent transition-colors interactable text-xl"><i class="ph ph-instagram-logo"></i></a>
+                    <a href="https://wa.me/917310106555" target="_blank" class="text-brand-muted hover:text-brand-accent transition-colors interactable text-xl"><i class="ph ph-whatsapp-logo"></i></a>
+                </div>
+            </div>
+            <div class="text-brand-muted text-sm text-center md:text-right">
+                <p>&copy; 2026 Ayush Srivastava. All Rights Reserved.</p>
+                <div class="flex gap-4 justify-center md:justify-end mt-2">
+                    <a href="index.html" class="hover:text-brand-accent transition-colors">Home</a>
+                    <a href="insights.html" class="hover:text-brand-accent transition-colors">Insights</a>
+                    <a href="contact.html" class="hover:text-brand-accent transition-colors">Contact</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // 1. Progress Bar Logic
+            window.addEventListener('scroll', () => {
+                const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+                const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                const scrolled = (winScroll / height) * 100;
+                document.getElementById("progress-bar").style.width = scrolled + "%";
+            });
+
+            // 2. Custom Cursor
+            const cursorDot = document.querySelector('.cursor-dot');
+            const cursorOutline = document.querySelector('.cursor-outline');
+            const interactables = document.querySelectorAll('.interactable, a, button');
+
+            window.addEventListener('mousemove', (e) => {
+                const posX = e.clientX;
+                const posY = e.clientY;
+                cursorDot.style.left = `${posX}px`;
+                cursorDot.style.top = `${posY}px`;
+                cursorOutline.animate({ left: `${posX}px`, top: `${posY}px` }, { duration: 500, fill: "forwards" });
+            });
+
+            interactables.forEach(el => {
+                el.addEventListener('mouseenter', () => document.body.classList.add('hovering'));
+                el.addEventListener('mouseleave', () => document.body.classList.remove('hovering'));
+            });
+
+            // 3. Scroll Reveal
+            const revealElements = document.querySelectorAll('.reveal');
+            const revealObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    }
+                });
+            }, { threshold: 0.1 });
+            revealElements.forEach(el => revealObserver.observe(el));
+
+            // 4. Filtering Logic
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            const projectCards = document.querySelectorAll('.project-card');
+
+            filterButtons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const filterValue = btn.getAttribute('data-filter');
+
+                    // Update button active states
+                    filterButtons.forEach(b => {
+                        b.classList.remove('bg-brand-accent', 'text-brand-dark', 'font-bold');
+                        b.classList.add('border', 'border-white/10', 'text-brand-muted');
+                    });
+                    btn.classList.add('bg-brand-accent', 'text-brand-dark', 'font-bold');
+                    btn.classList.remove('border', 'border-white/10', 'text-brand-muted');
+
+                    // Filter cards
+                    projectCards.forEach(card => {
+                        const category = card.getAttribute('data-category');
+                        
+                        if (filterValue === 'all' || category === filterValue) {
+                            card.classList.remove('hidden');
+                            // Re-trigger reveal animation if hidden before
+                            setTimeout(() => {
+                                card.style.opacity = '1';
+                                card.style.transform = 'scale(1)';
+                            }, 50);
+                        } else {
+                            card.classList.add('hidden');
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO METADATA -->
+    <title>Insights & Tutorials | Ayush Srivastava</title>
+    <meta name="description" content="Project Management tutorials, Agile methodologies, and leadership insights by Ayush Srivastava. Detailed guides and video walkthroughs.">
+    <meta name="keywords" content="Project Management Blog, Agile Tutorials, JIRA Guides, PMP Tips, Leadership Articles">
+    <meta name="author" content="Ayush Srivastava">
+    <meta property="og:title" content="Insights & Tutorials | Ayush Srivastava">
+    <meta property="og:description" content="Sharing the blueprint for successful project delivery.">
+    <meta property="og:image" content="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&q=80">
+    <meta property="og:type" content="website">
+
+    <!-- FONTS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    
+    <!-- TAILWIND CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- ICONS -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <!-- CUSTOM CONFIG & STYLES -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'brand-dark': '#0a0a0a',
+                        'brand-gray': '#1c1c1c',
+                        'brand-accent': '#d4af37', // Gold
+                        'brand-text': '#f3f4f6',
+                        'brand-muted': '#9ca3af',
+                    },
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    backgroundImage: {
+                        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* SHARED STYLES FROM INDEX.HTML */
+        :root {
+            --cursor-size: 20px;
+            --cursor-hover-size: 60px;
+        }
+
+        body {
+            background-color: #0a0a0a;
+            color: #f3f4f6;
+            cursor: none;
+            overflow-x: hidden;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0a0a0a; }
+        ::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #d4af37; }
+
+        /* Custom Cursor */
+        .cursor-dot, .cursor-outline {
+            position: fixed; top: 0; left: 0;
+            transform: translate(-50%, -50%);
+            border-radius: 50%; z-index: 9999;
+            pointer-events: none;
+        }
+        .cursor-dot { width: 8px; height: 8px; background-color: white; }
+        .cursor-outline {
+            width: 40px; height: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            transition: width 0.2s, height 0.2s, background-color 0.2s;
+        }
+        body.hovering .cursor-outline {
+            width: 60px; height: 60px;
+            background-color: rgba(212, 175, 55, 0.1);
+            border-color: #d4af37;
+            backdrop-filter: blur(2px);
+        }
+
+        /* Animations */
+        .reveal {
+            opacity: 0; transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+        }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        /* Noise Overlay */
+        .noise-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 9000; opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        /* NEW STYLES FOR BLOG/VIDEO */
+        .category-btn.active {
+            background-color: #d4af37;
+            color: #0a0a0a;
+            border-color: #d4af37;
+        }
+        
+        .video-card:hover .play-button {
+            transform: scale(1.1);
+            background-color: #d4af37;
+            color: #0a0a0a;
+            border-color: #d4af37;
+        }
+
+        .blog-card-img {
+            transition: transform 0.5s ease;
+        }
+        .group:hover .blog-card-img {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-brand-accent selection:text-brand-dark">
+
+    <div class="noise-overlay"></div>
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
+
+    <!-- Navigation (Simplified for sub-page) -->
+    <nav class="fixed w-full z-50 top-0 transition-all duration-300" id="navbar">
+        <div class="absolute inset-0 bg-brand-dark/80 backdrop-blur-md border-b border-white/5"></div>
+        <div class="max-w-7xl mx-auto px-6 py-4 relative flex justify-between items-center">
+            <a href="index.html" class="text-2xl font-serif font-bold tracking-tight interactable">AS<span class="text-brand-accent">.</span></a>
+            
+            <div class="hidden md:flex space-x-8 text-sm uppercase tracking-widest font-light">
+                <a href="index.html#about" class="hover:text-brand-accent transition-colors interactable">Philosophy</a>
+                <a href="index.html#projects" class="hover:text-brand-accent transition-colors interactable">Case Studies</a>
+                <a href="#" class="text-brand-accent interactable">Insights</a> <!-- Active State -->
+                <a href="contact.html" class="px-5 py-2 border border-white/20 rounded-full hover:bg-brand-accent hover:text-brand-dark hover:border-brand-accent transition-all interactable">Let's Talk</a>
+            </div>
+
+            <!-- Mobile Menu Toggle -->
+            <button class="md:hidden text-2xl interactable" onclick="document.getElementById('mobile-menu').classList.toggle('hidden')">
+                <i class="ph ph-list"></i>
+            </button>
+        </div>
+        
+        <div id="mobile-menu" class="hidden md:hidden absolute w-full bg-brand-dark border-b border-white/10 p-6 flex flex-col space-y-4">
+            <a href="index.html" class="text-lg">Home</a>
+            <a href="#" class="text-brand-accent">Insights</a>
+        </div>
+    </nav>
+
+    <main>
+        <!-- Header -->
+        <section class="relative pt-40 pb-20 bg-brand-dark overflow-hidden">
+             <!-- Abstract Background Shape -->
+             <div class="absolute top-0 left-1/4 w-[600px] h-[600px] bg-brand-accent/5 rounded-full blur-[120px] pointer-events-none"></div>
+
+            <div class="max-w-7xl mx-auto px-6 relative z-10 text-center">
+                <h1 class="text-5xl md:text-7xl font-serif mb-6 reveal">Knowledge <span class="text-brand-accent italic">Hub.</span></h1>
+                <p class="text-xl text-brand-muted max-w-2xl mx-auto font-light mb-12 reveal" style="transition-delay: 100ms;">
+                    A collection of thoughts on Agile transformation, leadership strategies, and video walkthroughs of my favorite PM tools.
+                </p>
+
+                <!-- Filter Tabs -->
+                <div class="flex justify-center gap-4 reveal" style="transition-delay: 200ms;">
+                    <button class="category-btn active px-6 py-2 rounded-full border border-white/20 text-sm uppercase tracking-wider hover:border-brand-accent transition-all interactable" data-filter="all">All</button>
+                    <button class="category-btn px-6 py-2 rounded-full border border-white/20 text-sm uppercase tracking-wider hover:border-brand-accent transition-all interactable" data-filter="article">Articles</button>
+                    <button class="category-btn px-6 py-2 rounded-full border border-white/20 text-sm uppercase tracking-wider hover:border-brand-accent transition-all interactable" data-filter="video">Videos</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Content Grid -->
+        <section class="pb-32">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8" id="content-grid">
+
+                    
+                    <!-- Video Post 1 -->
+                    <article class="group reveal interactable video-card" data-category="video" style="transition-delay: 100ms;">
+                        <div class="rounded-xl overflow-hidden h-60 mb-6 relative border border-white/10">
+                            <!-- Overlay -->
+                            <div class="absolute inset-0 bg-black/40 z-10 flex items-center justify-center">
+                                <div class="play-button w-14 h-14 rounded-full border border-white text-white flex items-center justify-center transition-all duration-300">
+                                    <i class="ph-fill ph-play text-xl ml-1"></i>
+                                </div>
+                            </div>
+                            <img src="https://img.youtube.com/vi/2pKGCB8f0wE/maxresdefault.jpg" alt="JIRA Tutorial" class="blog-card-img w-full h-full object-cover opacity-80">
+                            <div class="absolute top-4 left-4 z-20">
+                                <span class="bg-red-600/90 px-3 py-1 rounded text-xs text-white uppercase tracking-wide flex items-center gap-1"><i class="ph-fill ph-youtube-logo"></i> Tutorial</span>
+                            </div>
+                        </div>
+                        <div class="pr-4">
+                            <div class="flex items-center gap-3 text-xs text-brand-muted mb-3">
+                                <span>Video</span>
+                                <span class="w-1 h-1 rounded-full bg-brand-accent"></span>
+                                <span>06:38 duration</span>
+                            </div>
+                            <h3 class="text-2xl font-serif mb-3 group-hover:text-brand-accent transition-colors">Full stack restaurant management system demo.</h3>
+                            <p class="text-brand-muted text-sm line-clamp-2 mb-4">
+                                A demonstration of restaurant management system using python.
+                            </p>
+                            <a href="https://youtu.be/2pKGCB8f0wE" class="inline-flex items-center text-sm font-medium hover:text-brand-accent transition-colors">Watch Video <i class="ph ph-arrow-right ml-2"></i></a>
+                        </div>
+                    </article>
+
+                    <article class="group reveal interactable video-card" data-category="video" style="transition-delay: 100ms;">
+                        <div class="rounded-xl overflow-hidden h-60 mb-6 relative border border-white/10">
+                            <!-- Overlay -->
+                            <div class="absolute inset-0 bg-black/40 z-10 flex items-center justify-center">
+                                <div class="play-button w-14 h-14 rounded-full border border-white text-white flex items-center justify-center transition-all duration-300">
+                                    <i class="ph-fill ph-play text-xl ml-1"></i>
+                                </div>
+                            </div>
+                            <img src="https://img.youtube.com/vi/T55XISiKcQM/maxresdefault.jpg" alt="JIRA Tutorial" class="blog-card-img w-full h-full object-cover opacity-80">
+                            <div class="absolute top-4 left-4 z-20">
+                                <span class="bg-red-600/90 px-3 py-1 rounded text-xs text-white uppercase tracking-wide flex items-center gap-1"><i class="ph-fill ph-youtube-logo"></i> Tutorial</span>
+                            </div>
+                        </div>
+                        <div class="pr-4">
+                            <div class="flex items-center gap-3 text-xs text-brand-muted mb-3">
+                                <span>Video</span>
+                                <span class="w-1 h-1 rounded-full bg-brand-accent"></span>
+                                <span>33:40 duration</span>
+                            </div>
+                            <h3 class="text-2xl font-serif mb-3 group-hover:text-brand-accent transition-colors">How to make a Z-fold brochure using Canva.</h3>
+                            <p class="text-brand-muted text-sm line-clamp-2 mb-4">
+                                A step by step tutorial on designing a Z-fold brichure from scratch.
+                            </p>
+                            <a href="https://youtu.be/T55XISiKcQM" class="inline-flex items-center text-sm font-medium hover:text-brand-accent transition-colors">Watch Video <i class="ph ph-arrow-right ml-2"></i></a>
+                        </div>
+                    </article>
+
+
+                    
+                    <!-- Blog Post 1 -->
+                    <article class="group reveal interactable" data-category="article">
+                        <div class="rounded-xl overflow-hidden h-60 mb-6 relative">
+                            <div class="absolute inset-0 bg-brand-dark/20 group-hover:bg-transparent transition-all z-10"></div>
+                            <img src="https://images.unsplash.com/photo-1512758017271-d7b84c2113f1?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Agile Leadership" class="blog-card-img w-full h-full object-cover">
+                            <div class="absolute top-4 left-4 z-20">
+                                <span class="bg-brand-dark/80 backdrop-blur-sm px-3 py-1 rounded text-xs text-brand-accent uppercase tracking-wide border border-white/10">Leadership</span>
+                            </div>
+                        </div>
+                        <div class="pr-4">
+                            <div class="flex items-center gap-3 text-xs text-brand-muted mb-3">
+                                <span>Feb 18, 2026</span>
+                                <span class="w-1 h-1 rounded-full bg-brand-accent"></span>
+                                <span>5 min read</span>
+                            </div>
+                            <h3 class="text-2xl font-serif mb-3 group-hover:text-brand-accent transition-colors">The Art of Saying "No" to Stakeholders</h3>
+                            <p class="text-brand-muted text-sm line-clamp-2 mb-4">
+                                Scope creep is the silent killer of projects. Here is a framework for managing expectations without burning bridges.
+                            </p>
+                            <a href="https://www.linkedin.com/pulse/art-saying-stakeholders-ayush-srivastava-l21pc" class="inline-flex items-center text-sm font-medium hover:text-brand-accent transition-colors">Read Article <i class="ph ph-arrow-right ml-2"></i></a>
+                        </div>
+                    </article>
+
+                     <!-- Video Post 2 -->
+                    <article class="group reveal interactable video-card" data-category="video" style="transition-delay: 100ms;">
+                        <div class="rounded-xl overflow-hidden h-60 mb-6 relative border border-white/10">
+                            <!-- Overlay -->
+                            <div class="absolute inset-0 bg-black/40 z-10 flex items-center justify-center">
+                                <div class="play-button w-14 h-14 rounded-full border border-white text-white flex items-center justify-center transition-all duration-300">
+                                    <i class="ph-fill ph-play text-xl ml-1"></i>
+                                </div>
+                            </div>
+                            <img src="https://img.youtube.com/vi/79BwPl1nd4Y/maxresdefault.jpg" alt="Learning Management System" class="blog-card-img w-full h-full object-cover opacity-80">
+                            <div class="absolute top-4 left-4 z-20">
+                                <span class="bg-red-600/90 px-3 py-1 rounded text-xs text-white uppercase tracking-wide flex items-center gap-1"><i class="ph-fill ph-youtube-logo"></i> Tutorial</span>
+                            </div>
+                        </div>
+                        <div class="pr-4">
+                            <div class="flex items-center gap-3 text-xs text-brand-muted mb-3">
+                                <span>Video</span>
+                                <span class="w-1 h-1 rounded-full bg-brand-accent"></span>
+                                <span>01:02:58 duration</span>
+                            </div>
+                            <h3 class="text-2xl font-serif mb-3 group-hover:text-brand-accent transition-colors">Capstone Project - Learning Management System</h3>
+                            <p class="text-brand-muted text-sm line-clamp-2 mb-4">
+                                Build learning management system using python and gemini.
+                            </p>
+                            <a href="https://youtu.be/79BwPl1nd4Y?si=va6knxqsbOPtm-0e" class="inline-flex items-center text-sm font-medium hover:text-brand-accent transition-colors">Watch Video <i class="ph ph-arrow-right ml-2"></i></a>
+                        </div>
+                    </article>
+
+
+                    <!-- Video Post 2 -->
+                    <article class="group reveal interactable video-card" data-category="video" style="transition-delay: 100ms;">
+                        <div class="rounded-xl overflow-hidden h-60 mb-6 relative border border-white/10">
+                            <!-- Overlay -->
+                            <div class="absolute inset-0 bg-black/40 z-10 flex items-center justify-center">
+                                <div class="play-button w-14 h-14 rounded-full border border-white text-white flex items-center justify-center transition-all duration-300">
+                                    <i class="ph-fill ph-play text-xl ml-1"></i>
+                                </div>
+                            </div>
+                            <img src="https://img.youtube.com/vi/szIiOfUr2D4/maxresdefault.jpg" alt="JIRA Tutorial" class="blog-card-img w-full h-full object-cover opacity-80">
+                            <div class="absolute top-4 left-4 z-20">
+                                <span class="bg-red-600/90 px-3 py-1 rounded text-xs text-white uppercase tracking-wide flex items-center gap-1"><i class="ph-fill ph-youtube-logo"></i> Tutorial</span>
+                            </div>
+                        </div>
+                        <div class="pr-4">
+                            <div class="flex items-center gap-3 text-xs text-brand-muted mb-3">
+                                <span>Video</span>
+                                <span class="w-1 h-1 rounded-full bg-brand-accent"></span>
+                                <span>12:34 duration</span>
+                            </div>
+                            <h3 class="text-2xl font-serif mb-3 group-hover:text-brand-accent transition-colors">Private Bin Explained</h3>
+                            <p class="text-brand-muted text-sm line-clamp-2 mb-4">
+                                A walkthrough on usage of private bins for sharing sensitive information across organization.
+                            </p>
+                            <a href="https://youtu.be/szIiOfUr2D4" class="inline-flex items-center text-sm font-medium hover:text-brand-accent transition-colors">Watch Video <i class="ph ph-arrow-right ml-2"></i></a>
+                        </div>
+                    </article>
+
+                    
+
+                    <!-- Blog Post 2 -->
+                    <article class="group reveal interactable" data-category="article" style="transition-delay: 200ms;">
+                        <div class="rounded-xl overflow-hidden h-60 mb-6 relative">
+                            <div class="absolute inset-0 bg-brand-dark/20 group-hover:bg-transparent transition-all z-10"></div>
+                            <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80" alt="Remote Teams" class="blog-card-img w-full h-full object-cover">
+                            <div class="absolute top-4 left-4 z-20">
+                                <span class="bg-brand-dark/80 backdrop-blur-sm px-3 py-1 rounded text-xs text-brand-accent uppercase tracking-wide border border-white/10">Remote Work</span>
+                            </div>
+                        </div>
+                        <div class="pr-4">
+                            <div class="flex items-center gap-3 text-xs text-brand-muted mb-3">
+                                <span>Dec 16, 2025</span>
+                                <span class="w-1 h-1 rounded-full bg-brand-accent"></span>
+                                <span>7 min read</span>
+                            </div>
+                            <h3 class="text-2xl font-serif mb-3 group-hover:text-brand-accent transition-colors">Managing Scope Creep in SaaS</h3>
+                            <p class="text-brand-muted text-sm line-clamp-2 mb-4">
+                                This article outlines how a real scope creep case was handled in a SaaS project.
+                            </p>
+                            <a href="https://www.linkedin.com/pulse/managing-scope-creep-saas-real-case-client-alignment-ayush-srivastava-nisxc" class="inline-flex items-center text-sm font-medium hover:text-brand-accent transition-colors">Read Article <i class="ph ph-arrow-right ml-2"></i></a>
+                        </div>
+                    </article>
+
+                     <!-- Blog Post 3 -->
+                     <article class="group reveal interactable" data-category="article">
+                        <div class="rounded-xl overflow-hidden h-60 mb-6 relative">
+                            <div class="absolute inset-0 bg-brand-dark/20 group-hover:bg-transparent transition-all z-10"></div>
+                            <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&q=80" alt="Risk Management" class="blog-card-img w-full h-full object-cover">
+                            <div class="absolute top-4 left-4 z-20">
+                                <span class="bg-brand-dark/80 backdrop-blur-sm px-3 py-1 rounded text-xs text-brand-accent uppercase tracking-wide border border-white/10">Strategy</span>
+                            </div>
+                        </div>
+                        <div class="pr-4">
+                            <div class="flex items-center gap-3 text-xs text-brand-muted mb-3">
+                                <span>Dec 19, 2025</span>
+                                <span class="w-1 h-1 rounded-full bg-brand-accent"></span>
+                                <span>10 min read</span>
+                            </div>
+                            <h3 class="text-2xl font-serif mb-3 group-hover:text-brand-accent transition-colors">Rescuing a Stalled Enterprise Project</h3>
+                            <p class="text-brand-muted text-sm line-clamp-2 mb-4">
+                                Structured leadership and precise validation resolved a critical blocker and restored delivery momentum.
+                            </p>
+                            <a href="https://www.linkedin.com/pulse/how-leadership-structure-attention-detail-rescued-ayush-srivastava-wmifc" class="inline-flex items-center text-sm font-medium hover:text-brand-accent transition-colors">Read Article <i class="ph ph-arrow-right ml-2"></i></a>
+                        </div>
+                    </article>
+
+                   
+                    
+
+                     <!-- Blog Post 4 -->
+                     <!-- <article class="group reveal interactable" data-category="article" style="transition-delay: 200ms;">
+                        <div class="rounded-xl overflow-hidden h-60 mb-6 relative">
+                            <div class="absolute inset-0 bg-brand-dark/20 group-hover:bg-transparent transition-all z-10"></div>
+                            <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&q=80" alt="Career Growth" class="blog-card-img w-full h-full object-cover">
+                            <div class="absolute top-4 left-4 z-20">
+                                <span class="bg-brand-dark/80 backdrop-blur-sm px-3 py-1 rounded text-xs text-brand-accent uppercase tracking-wide border border-white/10">Career</span>
+                            </div>
+                        </div>
+                        <div class="pr-4">
+                            <div class="flex items-center gap-3 text-xs text-brand-muted mb-3">
+                                <span>Jul 01, 2023</span>
+                                <span class="w-1 h-1 rounded-full bg-brand-accent"></span>
+                                <span>4 min read</span>
+                            </div>
+                            <h3 class="text-2xl font-serif mb-3 group-hover:text-brand-accent transition-colors">Moving from Senior PM to Director</h3>
+                            <p class="text-brand-muted text-sm line-clamp-2 mb-4">
+                                The skills that got you here won't get you there. A reflection on strategic thinking versus tactical execution.
+                            </p>
+                            <a href="#" class="inline-flex items-center text-sm font-medium hover:text-brand-accent transition-colors">Read Article <i class="ph ph-arrow-right ml-2"></i></a>
+                        </div>
+                    </article> -->
+
+                </div>
+
+                <!-- Empty State (Hidden by default) -->
+                <div id="empty-state" class="hidden text-center py-20">
+                    <i class="ph ph-magnifying-glass text-4xl text-brand-muted mb-4"></i>
+                    <p class="text-brand-muted">No content found in this category.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Newsletter Section -->
+        <!-- <section class="py-24 border-t border-white/5 bg-brand-gray/10">
+            <div class="max-w-3xl mx-auto px-6 text-center">
+                <i class="ph ph-paper-plane-tilt text-4xl text-brand-accent mb-6 reveal"></i>
+                <h2 class="text-3xl md:text-5xl font-serif mb-6 reveal">Join the 1% of Project Managers.</h2>
+                <p class="text-brand-muted mb-10 reveal">
+                    Get my weekly tear-downs of complex projects, template downloads, and career advice delivered straight to your inbox. No spam, just value.
+                </p>
+                
+                <form class="flex flex-col md:flex-row gap-4 reveal" onsubmit="event.preventDefault();">
+                    <input type="email" placeholder="Enter your work email" class="flex-1 bg-white/5 border border-white/10 rounded-full px-6 py-4 text-white focus:outline-none focus:border-brand-accent transition-colors interactable">
+                    <button class="bg-brand-text text-brand-dark px-10 py-4 rounded-full font-bold hover:bg-brand-accent transition-colors interactable">Subscribe</button>
+                </form>
+                <p class="text-xs text-brand-muted mt-6 opacity-60">Join 5,000+ subscribers. Unsubscribe anytime.</p>
+            </div>
+        </section> -->
+
+        <section class="py-24 border-t border-white/5 bg-brand-gray/10">
+            <div class="max-w-3xl mx-auto px-6 text-center">
+                <i class="ph ph-paper-plane-tilt text-4xl text-brand-accent mb-6 reveal"></i>
+                <h2 class="text-3xl md:text-5xl font-serif mb-6 reveal">Join the 1% of Project Managers.</h2>
+                <p class="text-brand-muted mb-10 reveal">
+                    Get my weekly tear-downs of complex projects, template downloads, and career advice delivered straight to your inbox. No spam, just value.
+                </p>
+                
+                <form id="whatsapp-newsletter-form" class="flex flex-col md:flex-row gap-4 reveal">
+                    <input id="user-email" type="email" required placeholder="Enter your work email" class="flex-1 bg-white/5 border border-white/10 rounded-full px-6 py-4 text-white focus:outline-none focus:border-brand-accent transition-colors interactable">
+                    <button type="submit" class="bg-brand-text text-brand-dark px-10 py-4 rounded-full font-bold hover:bg-brand-accent transition-colors interactable">Subscribe</button>
+                </form>
+
+                <div id="success-message" class="hidden mt-6 text-brand-accent font-bold animate-pulse">
+                    Subscribed! Please send the pre-filled message on WhatsApp to confirm. 🚀
+                </div>
+
+                <p class="text-xs text-brand-muted mt-6 opacity-60">Join 5,000+ subscribers. Unsubscribe anytime.</p>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-white/10 py-12 bg-black">
+        <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="flex flex-col items-center md:items-start gap-4">
+                <div class="text-2xl font-serif font-bold tracking-tight">AS<span class="text-brand-accent">.</span></div>
+                
+                <!-- Social Media Icons -->
+                <div class="flex gap-5">
+                    <a href="https://www.linkedin.com/in/ayushh-srrivastava" target="_blank" aria-label="LinkedIn" class="text-brand-muted hover:text-brand-accent transition-colors interactable text-xl">
+                        <i class="ph ph-linkedin-logo"></i>
+                    </a>
+                    <a href="https://instagram.com/ayushh.info" target="_blank" aria-label="Instagram" class="text-brand-muted hover:text-brand-accent transition-colors interactable text-xl">
+                        <i class="ph ph-instagram-logo"></i>
+                    </a>
+                    <a href="https://wa.me/917310106555" target="_blank" aria-label="WhatsApp" class="text-brand-muted hover:text-brand-accent transition-colors interactable text-xl">
+                        <i class="ph ph-whatsapp-logo"></i>
+                    </a> 
+                </div>
+            </div>
+
+            <div class="text-brand-muted text-sm text-center md:text-right">
+                <p>&copy; <span id="year"></span> Ayush Srivastava. All Rights Reserved.</p>
+                <div class="flex gap-4 justify-center md:justify-end mt-2">
+                    <a href="index.html" class="hover:text-brand-accent transition-colors">Home</a>
+                    <a href="insights.html" class="hover:text-brand-accent transition-colors">Insights</a>
+                    <a href="#" class="text-brand-accent">Contact</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // 1. DYNAMIC YEAR
+            document.getElementById('year').textContent = new Date().getFullYear();
+
+            // 2. CUSTOM CURSOR
+            const cursorDot = document.querySelector('.cursor-dot');
+            const cursorOutline = document.querySelector('.cursor-outline');
+            const interactables = document.querySelectorAll('.interactable');
+
+            window.addEventListener('mousemove', (e) => {
+                const posX = e.clientX;
+                const posY = e.clientY;
+                cursorDot.style.left = `${posX}px`;
+                cursorDot.style.top = `${posY}px`;
+                cursorOutline.animate({ left: `${posX}px`, top: `${posY}px` }, { duration: 500, fill: "forwards" });
+            });
+
+            interactables.forEach(el => {
+                el.addEventListener('mouseenter', () => document.body.classList.add('hovering'));
+                el.addEventListener('mouseleave', () => document.body.classList.remove('hovering'));
+            });
+
+            // 3. SCROLL REVEAL
+            const revealElements = document.querySelectorAll('.reveal');
+            const revealObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    }
+                });
+            }, { threshold: 0.15, rootMargin: "0px 0px -50px 0px" });
+            revealElements.forEach(el => revealObserver.observe(el));
+
+            // 4. FILTER TAB LOGIC
+            const filterBtns = document.querySelectorAll('.category-btn');
+            const contentItems = document.querySelectorAll('[data-category]');
+            const emptyState = document.getElementById('empty-state');
+            const contentGrid = document.getElementById('content-grid');
+
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    // Remove active class from all
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    // Add active to clicked
+                    btn.classList.add('active');
+
+                    const filterValue = btn.getAttribute('data-filter');
+                    let visibleCount = 0;
+
+                    // Animate grid opacity for smooth transition
+                    contentGrid.style.opacity = '0';
+                    contentGrid.style.transform = 'translateY(10px)';
+                    contentGrid.style.transition = 'all 0.3s ease';
+
+                    setTimeout(() => {
+                        contentItems.forEach(item => {
+                            if (filterValue === 'all' || item.getAttribute('data-category') === filterValue) {
+                                item.style.display = 'block';
+                                visibleCount++;
+                            } else {
+                                item.style.display = 'none';
+                            }
+                        });
+
+                        // Show/Hide Empty State
+                        if (visibleCount === 0) {
+                            emptyState.classList.remove('hidden');
+                        } else {
+                            emptyState.classList.add('hidden');
+                        }
+
+                        // Restore Opacity
+                        contentGrid.style.opacity = '1';
+                        contentGrid.style.transform = 'translateY(0)';
+                    }, 300);
+                });
+            });
+
+            // 5. NAVBAR SHADOW
+            const navbar = document.getElementById('navbar');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) navbar.classList.add('shadow-lg');
+                else navbar.classList.remove('shadow-lg');
+            });
+        });
+
+
+        // document.getElementById('whatsapp-newsletter-form').addEventListener('submit', function(e) {
+        //     e.preventDefault();
+
+        //     // 1. Get the email value
+        //     const email = document.getElementById('user-email').value;
+        //     const myNumber = "917310106555"; 
+
+        //     // 2. Create the message (URL encoded for spaces and symbols)
+        //     const text = `Hello! I'd like to join the 1% of Project Managers. My email is: ${email}`;
+        //     const whatsappURL = `https://wa.me/${myNumber}?text=${encodeURIComponent(text)}`;
+
+        //     // 3. Open WhatsApp in a new tab
+        //     window.open(whatsappURL, '_blank');
+
+        //     // 4. Update the UI on your website
+        //     document.getElementById('whatsapp-newsletter-form').classList.add('hidden');
+        //     document.getElementById('success-message').classList.remove('hidden');
+        // });
+
+    
+        (function() {
+    // We store your number in reverse to confuse bots
+    // 555-601-013-719
+    const _parts = ["555", "601", "013", "719"];
+
+    document.getElementById('whatsapp-newsletter-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        // Reconstruct the number by reversing the parts and the string
+        const _raw = _parts.join('');
+        const _target = _raw.split('').reverse().join(''); 
+        
+        // Get the email and format the message
+        const _email = document.getElementById('user-email').value;
+        const _text = `Hello! I'd like to join the 1% of Project Managers. My email is: ${_email}`;
+        
+        // Construct the final URL
+        const _url = "https://wa.me/" + _target + "?text=" + encodeURIComponent(_text);
+
+        // Open WhatsApp
+        const _tab = window.open(_url, '_blank');
+        
+        // Success UI update
+        document.getElementById('whatsapp-newsletter-form').style.display = 'none';
+        document.getElementById('success-message').classList.remove('hidden');
+
+        // Fallback for popup blockers
+        if (!_tab) {
+            window.location.href = _url;
+        }
+    });
+})();
+
+    </script>
+</body>
+</html>
