@@ -369,24 +369,7 @@
                 el.addEventListener('mouseleave', () => document.body.classList.remove('hovering'));
             });
 
-            const menuBtn = document.getElementById('menu-btn');
-            const mobileMenu = document.getElementById('mobile-menu');
-            const line1 = document.getElementById('line1');
-            const line2 = document.getElementById('line2');
             
-            menuBtn.addEventListener('click', () => {
-                // Toggle Menu Visibility
-                mobileMenu.classList.toggle('opacity-0');
-                mobileMenu.classList.toggle('pointer-events-none');
-                mobileMenu.classList.toggle('translate-y-[-10px]');
-                mobileMenu.classList.toggle('translate-y-0');
-            
-                // Animate Hamburger to X
-                line1.classList.toggle('rotate-45');
-                line1.classList.toggle('translate-y-[4px]');
-                line2.classList.toggle('-rotate-45');
-                line2.classList.toggle('-translate-y-[4px]');
-            });
 
             // 3. Scroll Reveal
             const revealElements = document.querySelectorAll('.reveal');
